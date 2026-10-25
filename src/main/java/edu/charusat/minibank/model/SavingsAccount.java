@@ -1,0 +1,16 @@
+package edu.charusat.minibank.model;
+public class SavingsAccount extends Account {
+    private static final long serialVersionUID = 1L;
+    private final long minBalance;
+    public SavingsAccount(String ownerName, long openingBalance, long minBalance) {
+        super(ownerName, openingBalance);
+        if (minBalance < 0) throw new IllegalArgumentException("Minimum balance cannot be negative");
+        this.minBalance = minBalance;
+    }
+    public long getMinBalance() { return minBalance; }
+    @Override public double interestRate() { return 4.0; }
+    @Override public boolean canWithdraw(long amount) {
+        long currentBalance = getBalance();
+        return amount > 0 && currentBalance >= minBalance && amount <= currentBalance - minBalance;
+    }
+}
